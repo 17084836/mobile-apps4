@@ -10,6 +10,7 @@ import Contact from './components/contact';
 
 import SignupScreen from './components/signup';
 import LoginScreen from './components/login';
+import Logout from './components/logout';
 
 //import Home from './components/home_with_buttons';
 
@@ -26,6 +27,7 @@ class App extends Component {
 
 <Drawer.Screen name="SignupScreen" component={SignupScreen} />
 <Drawer.Screen name="LoginScreen" component={LoginScreen} />
+<Drawer.Screen name="Logout" component={Logout} />
 
     </Drawer.Navigator>
   </NavigationContainer>

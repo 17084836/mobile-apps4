@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Button, ToastAndroid } from 'react-native';
+import { Button, ToastAndroid, Text } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
 class SignupScreen extends Component{
 
-  
+
   constructor(props){
     super(props);
+
 
     this.state = {
       first_name: "",
@@ -16,8 +17,10 @@ class SignupScreen extends Component{
     }
   }
 
+
   signup = () => {
     //Validation Here
+
 
     return fetch("http://10.0.2.2:3333/api/1.0.0/user", {
       method: 'post',
@@ -28,6 +31,7 @@ class SignupScreen extends Component{
     })
     .then((response) => {
       if(response.status === 201){
+          console.log("User Created with ID: ", response);
         return response.json()
       }else if(response.status === 400){
         throw 'Failed validation';
@@ -37,44 +41,65 @@ class SignupScreen extends Component{
     })
     .then(async (responseJson) => {
       console.log("User Created with ID: ", responseJson);
+      this.props.navigation.navigate("LoginScreen");
       ToastAndroid.show(error, ToastAndroid.SHORT);
     })
+    .catch((error) => {
+      console.log(error);
+      ToastAndroid.show("error",ToastAndroid.SHORT);
+    })
   }
+
+
+
 
   render(){
     return (
       <ScrollView>
+      <Text>Welcome! In order to make an account with us, we require you to enter the follwoing information.</Text>
         <TextInput
-          placeholder="Enter your first name..."
+          placeholder="Please Enter Your First Name.."
           onChangeText={(first_name) => this.setState({first_name})}
           value={this.state.first_name}
-          style={{padding:5, borderWidth:1, margin:5}}
+          style={{padding:10, borderWidth:8, margin:5}}
         />
 
+
+
+
         <TextInput
-          placeholder="Enter your last name..."
+          placeholder="Please Enter Your Last Name.."
           onChangeText={(last_name) => this.setState({last_name})}
           value={this.state.last_name}
-          style={{padding:5, borderWidth:1, margin:5}}
+          style={{padding:10, borderWidth:8, margin:5}}
         />
 
+
+
+
         <TextInput
-          placeholder="Enter your email..."
+          placeholder="Please Enter Your Email.."
           onChangeText={(email) => this.setState({email})}
           value={this.state.email}
-          style={{padding:5, borderWidth:1, margin:5}}
+          style={{padding:10, borderWidth:8, margin:5}}
         />
 
+
+
+
         <TextInput
-          placeholder="Enter your password..."
+          placeholder="Please Enter Your Password.."
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
           secureTextEntry
-          style={{padding:5, borderWidth:1, margin:5}}
+          style={{padding:10, borderWidth:8, margin:5}}
         />
 
+
+
+
         <Button
-          title="Create an account"
+          title="Create Account!"
           onPress={() => this.signup()}
         />
       </ScrollView>
